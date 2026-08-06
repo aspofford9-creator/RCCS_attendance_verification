@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Records Request Response — Reach Cyber Charter School</title>
+<style>
+  :root {
+    --bg: #F3F5F4;
+    --surface: #FFFFFF;
+    --ink: #16324F;
+    --ink-soft: #52667A;
+    --accent: #2F6F5E;
+    --accent-soft: #E7EFEC;
+    --line: #D8DEDC;
+    --line-strong: #B9C3C0;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    width: 100%;
+    max-width: 560px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent);
+    box-shadow: 0 1px 3px rgba(22, 50, 79, 0.06);
+    overflow: hidden;
+  }
+
+  .card-inner {
+    padding: 40px 40px 36px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+
+  .subline {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 28px;
+    line-height: 1.5;
+  }
+
+  .subline strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0 0 28px;
+  }
+
+  fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  legend {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    padding: 0;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .option:hover {
+    border-color: var(--line-strong);
+  }
+
+  .option input {
+    margin-top: 3px;
+    accent-color: var(--accent);
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .option-label {
+    font-size: 15px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .option-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .notes-wrap {
+    margin-top: 22px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .notes-wrap.open {
+    max-height: 220px;
+  }
+
+  .upload-wrap {
+    margin-top: 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .upload-wrap.open {
+    max-height: 220px;
+  }
+
+  .upload-wrap label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .upload-box {
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    padding: 16px 18px;
+    background: var(--accent-soft);
+  }
+
+  .upload-box input[type="file"] {
+    font-size: 13px;
+    color: var(--ink-soft);
+    width: 100%;
+  }
+
+  .upload-hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 8px 0 0;
+  }
+
+  .upload-hint.error {
+    color: #A6512C;
+    font-weight: 600;
+  }
+
+  .notes-wrap label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 84px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    resize: vertical;
+  }
+
+  textarea:focus, .option input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .submit-row {
+    margin-top: 28px;
+  }
+
+  button.submit {
+    width: 100%;
+    background: var(--accent);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  button.submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  button.submit:not(:disabled):hover {
+    opacity: 0.92;
+  }
+
+  .error-msg {
+    display: none;
+    font-size: 13px;
+    color: #A6512C;
+    margin-top: 12px;
+  }
+
+  .error-msg.visible {
+    display: block;
+  }
+
+  /* Confirmation state */
+  .confirm {
+    display: none;
+    padding: 56px 40px 48px;
+    text-align: center;
+  }
+
+  .confirm.visible {
+    display: block;
+  }
+
+  .check {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 20px;
+  }
+
+  .check circle {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+
+  .check path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: draw 0.4s ease 0.15s forwards;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .confirm h2 {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    margin: 0 0 8px;
+  }
+
+  .confirm p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .notes-wrap, .check path { transition: none; animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div style="width:100%; max-width:560px;">
+
+  <div class="card" id="formCard">
+    <div class="card-inner">
+      <p class="eyebrow">Attendance Records Request</p>
+      <h1 id="districtHeadline">Records request</h1>
+      <p class="subline" id="contextLine">Loading request details&hellip;</p>
+      <hr class="divider">
+
+      <form id="responseForm">
+        <fieldset>
+          <legend>Was this student habitually truant at your school this year?</legend>
+
+          <label class="option" data-value="yes">
+            <input type="radio" name="status" value="yes" required>
+            <span>
+              <span class="option-label">Yes</span>
+              <span class="option-desc">The student was habitually truant. Please attach the attendance record below.</span>
+            </span>
+          </label>
+
+          <div class="upload-wrap" id="uploadWrap">
+            <label for="recordFile">Attach the attendance record</label>
+            <div class="upload-box">
+              <input type="file" id="recordFile" name="recordFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+              <p class="upload-hint" id="uploadHint">PDF, Word, or image files up to 15 MB.</p>
+            </div>
+          </div>
+
+          <label class="option" data-value="no">
+            <input type="radio" name="status" value="no" required>
+            <span>
+              <span class="option-label">No</span>
+              <span class="option-desc">The student was not habitually truant at our school.</span>
+            </span>
+          </label>
+
+          <label class="option" data-value="not_enrolled">
+            <input type="radio" name="status" value="not_enrolled" required>
+            <span>
+              <span class="option-label">Student was not enrolled at our school</span>
+              <span class="option-desc">We have no record of this student attending.</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <div class="notes-wrap" id="notesWrap">
+          <label for="notes">Anything else we should know? (optional)</label>
+          <textarea id="notes" name="notes" maxlength="500" placeholder="Optional notes"></textarea>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" class="submit" id="submitBtn" disabled>Submit response</button>
+          <p class="error-msg" id="errorMsg">Something went wrong sending your response. Please try again, or reply directly to the original email.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card confirm" id="confirmCard">
+    <div class="card-inner" style="padding:0;">
+      <svg class="check" viewBox="0 0 52 52">
+        <circle cx="26" cy="26" r="24"></circle>
+        <path d="M15 27l7 7 15-15"></path>
+      </svg>
+      <h2>Response received</h2>
+      <p>Thank you — your response has been recorded. No further action is needed unless we follow up by email.</p>
+    </div>
+  </div>
+
+  <p class="footer-note">Reach Cyber Charter School &middot; Attendance &amp; Enrollment Records<br>Questions? Reply to the original email rather than this page.</p>
+
+</div>
+
+<script>
+  // ---- CONFIGURATION ----
+  // Replace with the "HTTP POST URL" generated by the Power Automate flow's
+  // "When an HTTP request is received" trigger.
+  const POWER_AUTOMATE_URL = "REPLACE_WITH_YOUR_FLOW_URL";
+  // ------------------------
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("t") || "";
+  const districtName = params.get("d") ? decodeURIComponent(params.get("d")) : "";
+  const requestDate = params.get("rd") ? decodeURIComponent(params.get("rd")) : "";
+
+  const headline = document.getElementById("districtHeadline");
+  const contextLine = document.getElementById("contextLine");
+
+  if (districtName) {
+    headline.textContent = districtName;
+  } else {
+    headline.textContent = "Attendance records request";
+  }
+
+  if (requestDate) {
+    contextLine.innerHTML = `We're following up on a student who recently enrolled with us and was previously at your school. Request sent <strong>${requestDate}</strong>.`;
+  } else {
+    contextLine.textContent = "We're following up on a student who recently enrolled with us and was previously at your school.";
+  }
+
+  // Highlight selected option, enable submit
+  const options = document.querySelectorAll(".option");
+  const submitBtn = document.getElementById("submitBtn");
+  const notesWrap = document.getElementById("notesWrap");
+  const uploadWrap = document.getElementById("uploadWrap");
+  const recordFile = document.getElementById("recordFile");
+  const uploadHint = document.getElementById("uploadHint");
+
+  const MAX_FILE_BYTES = 15 * 1024 * 1024; // 15 MB
+
+  options.forEach(opt => {
+    opt.addEventListener("click", () => {
+      options.forEach(o => o.classList.remove("selected"));
+      opt.classList.add("selected");
+      opt.querySelector("input").checked = true;
+      submitBtn.disabled = false;
+      notesWrap.classList.add("open");
+
+      if (opt.dataset.value === "yes") {
+        uploadWrap.classList.add("open");
+        recordFile.required = true;
+      } else {
+        uploadWrap.classList.remove("open");
+        recordFile.required = false;
+        recordFile.value = "";
+        uploadHint.textContent = "PDF, Word, or image files up to 15 MB.";
+        uploadHint.classList.remove("error");
+      }
+    });
+  });
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const form = document.getElementById("responseForm");
+  const errorMsg = document.getElementById("errorMsg");
+  const formCard = document.getElementById("formCard");
+  const confirmCard = document.getElementById("confirmCard");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!token) {
+      errorMsg.textContent = "This link is missing information and can't be submitted. Please reply to the original email instead.";
+      errorMsg.classList.add("visible");
+      return;
+    }
+
+    const selected = document.querySelector('input[name="status"]:checked');
+    if (!selected) return;
+
+    // Yes requires an attached record
+    if (selected.value === "yes") {
+      const file = recordFile.files[0];
+      if (!file) {
+        uploadHint.textContent = "Please attach the attendance record to continue.";
+        uploadHint.classList.add("error");
+        recordFile.focus();
+        return;
+      }
+      if (file.size > MAX_FILE_BYTES) {
+        uploadHint.textContent = "That file is over 15 MB. Please attach a smaller file or reply to the original email instead.";
+        uploadHint.classList.add("error");
+        return;
+      }
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+    errorMsg.classList.remove("visible");
+
+    const payload = {
+      token: token,
+      status: selected.value,
+      notes: document.getElementById("notes").value.trim(),
+      submittedAt: new Date().toISOString(),
+      fileName: null,
+      fileType: null,
+      fileContent: null
+    };
+
+    try {
+      if (selected.value === "yes") {
+        const file = recordFile.files[0];
+        payload.fileName = file.name;
+        payload.fileType = file.type;
+        payload.fileContent = await fileToBase64(file);
+      }
+
+      const res = await fetch(POWER_AUTOMATE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error("Non-200 response");
+
+      formCard.style.display = "none";
+      confirmCard.classList.add("visible");
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit response";
+      errorMsg.textContent = "Something went wrong sending your response. Please try again, or reply directly to the original email.";
+      errorMsg.classList.add("visible");
+    }
+  });
+</script>
+
+</body>
+</html>
