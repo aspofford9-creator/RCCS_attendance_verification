@@ -377,6 +377,8 @@
   const params = new URLSearchParams(window.location.search);
   const token = params.get("t") || "";
   const districtName = params.get("d") ? decodeURIComponent(params.get("d")) : "";
+  const studentName = params.get("sn") ? decodeURIComponent(params.get("sn")) : "";
+  const studentDob = params.get("dob") ? decodeURIComponent(params.get("dob")) : "";
   const requestDate = params.get("rd") ? decodeURIComponent(params.get("rd")) : "";
 
   const headline = document.getElementById("districtHeadline");
@@ -388,10 +390,12 @@
     headline.textContent = "Attendance records request";
   }
 
+  const dobLine = studentDob ? ` (DOB: <strong>${studentDob}</strong>)` : "";
+
   if (requestDate) {
-    contextLine.innerHTML = `We're following up on a student who recently enrolled with us and was previously at your school. Request sent <strong>${requestDate}</strong>.`;
+    contextLine.innerHTML = `We're following up on <strong>${studentName || "a student"}</strong>${dobLine}, who recently enrolled with us and was previously at your school. Request sent <strong>${requestDate}</strong>.`;
   } else {
-    contextLine.textContent = "We're following up on a student who recently enrolled with us and was previously at your school.";
+    contextLine.innerHTML = `We're following up on <strong>${studentName || "a student"}</strong>${dobLine}, who recently enrolled with us and was previously at your school.`;
   }
 
   const options = document.querySelectorAll(".option");
@@ -420,6 +424,8 @@
     const subject = `Records Response | token=${token} | status=${status}`;
     const bodyLines = [
       `District: ${districtName || "(not provided)"}`,
+      `Student: ${studentName || "(not provided)"}`,
+      `Date of birth: ${studentDob || "(not provided)"}`,
       `Response: ${STATUS_LABELS[status] || status}`,
       "",
       notes ? `Notes: ${notes}` : "Notes: (none)",
